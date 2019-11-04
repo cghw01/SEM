@@ -1,0 +1,8 @@
+LogWorld_PV[0] LogWorld 1 Galactic Atom density = 0.0596848 1/cm3 
+  samplecontainer_PV[0] samplecontainer 3 Galactic Atom density = 0.0596848 1/cm3 
+    LogSample_PV[0] LogSample 0 Silicon Atom density = 4.99345e+22 1/cm3  /Sample
+    LogPlaneR_PV[0] LogPlaneR 0 Galactic Atom density = 0.0596848 1/cm3  /PlaneR
+    LogPlaneT_PV[0] LogPlaneT 0 Galactic Atom density = 0.0596848 1/cm3  /PlaneT
+       Energy     n_PE    Total        delta          eta    n_SE3        E_deposit       E_detected
+         (eV)      (-)      (-)          (-)          (-)      (-)             (eV)             (eV)
+  1.25000e+03      500      354  4.98000e-01  2.10000e-01        0   0.00000000e+00   8.95134740e+04

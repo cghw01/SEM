@@ -1,0 +1,40 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/SEM_4.10.00.dir/SEM_4.10.00.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/G4GDMLReadMaterials.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMBulkDet.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMBulkDetHit.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMBulkDetMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMCounter.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMCounterHit.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMCounterMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMCountsPerCategory.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMDetectorConstruction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMDetectorConstructionMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMEventAction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMEventActionMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMGDMLReader.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMGeneralDetector.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMGeneralDetectorMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMPlane.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMPlaneHit.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMPlaneMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMPrimaryGeneratorAction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMPrimaryGeneratorActionMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMRunAction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMScanMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMSteppingAction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMSteppingActionMessenger.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMSteppingVerbose.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMTrackingAction.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMTrajectory.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMVRML2File.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMVRML2FileSceneHandler.cc.o"
+  "CMakeFiles/SEM_4.10.00.dir/src/SEMVRML2FileViewer.cc.o"
+  "SEM_4.10.00.pdb"
+  "SEM_4.10.00"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/SEM_4.10.00.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
