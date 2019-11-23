@@ -1,4 +1,4 @@
-# lowe-g4
+# SEM
 Geant4 version of the low-energy electron scattering model.
 
 # Installation
@@ -6,34 +6,32 @@ On UNIX systems:
 * Make sure you have CMake (3.3 or higher) installed
 * Install GDML and Xerces-C (see also the GEANT4 installation manual)
 * CLHEP is optional, GEANT4 has its own version included
-* Install GEANT4.10.02 patch 02 with GDML and Xerces-C enabled, a detailed description of this process can be found in the GEANT4 installation manual.
+* Install GEANT4.10.05 patch 01 with GDML and Xerces-C enabled, a detailed description of this process can be found in the GEANT4 installation manual.
 * The GEANT4 DATA is also necessary, so be sure to install this during the GEANT4 installation.
 
 Before installation, make sure to run the `geant4.sh` script to setup the right environment variables (this script is placed in the /bin/ in the install directory)
 
-Install the low-energy extension by going into the CADPhysics directory `cd CADPhysics` and executing:
+Install the SEM low-energy extension in the usual Geant4 way, by creating a sister directory called SEM-build and change directory into this directory i.e.
 
-    cmake .
+    mkdir SEM-build
+    cd SEM-build
+
+Now run the cmake command to start the build process
+cmake -DGeant4_DIR=~/Geant4/geant4.10.05.p01-install ../SEM
+
+The above cmake command assumes that Geant4 version 10.05.p01 has been placed in the directory ~/Geant4/geant4.10.05.p01-install.
+Now you can build the program by typing:
+
     make
-    make install
 
-repeat this in the SEM directory:
+or
+    make -jN
 
-    cd ../SEM
-    cmake .
-    make
-    make install
+where N is the number of processors on your computer. This creates an executable SEM.
 
-the executable SEM_4.10.00 should now be placed inside the usual installation directory `/usr/local/bin`
-or in the `/bin/` directory in the specified installation directory.
-
-To run the example, make a symbolic link to the SEM_4.10.00 in the `Examples/Transmission` directory
-
-    cd ../Examples/Transmission
-    ln -s /usr/local/bin/SEM_4.10.00 SEM
 
 # Running a simulation
-After the installation, simply execute the following command in the `Examples/Transmission`:
+After the installation, simply execute the following command:
  
     ./run.sh
 
