@@ -30,8 +30,20 @@ or
 where N is the number of processors on your computer. This creates an executable SEM.
 
 
+# Some preliminaries
+As usual with other geant4 programs you need to tell geant4 where the link libraries and data file exist. This can be
+done with the command something like (according to where you installed geant4):
+source ~/Geant4/geant4.10.05.p01-install/bin/geant4.sh 
+
+after this you need to run the command (from the SEM-build directory)
+source cadphysicsbase.sh
+
+This latter command will cause the CADPHYSICS_BASE to point at ../SEM. First, this means that the directories mott and df need to exist in the SEM directory and you should run the SEM program only from the SEM-build directory which has been placed next to the SEM directory.
+You might prefer that the CADPHYSICS_BASE environment variable points to an exact directory rather than a relative directory. In this case please edit the cadphysicsbase.sh file so that the export line says something like (according to where you placed the SEM directory) :
+export CADPHYSICS_BASE="~/Geant4/SEM/"
+
 # Running a simulation
-After the installation, simply execute the following command:
+After the installation, simply execute the following command from the SEM-build directory:
  
     ./run.sh
 
@@ -39,10 +51,13 @@ If the install directory was set to a different directory than the default direc
 
     CADPHYSICS_BASE=INSTALL_DIRECTORY ./run.sh
 
+e.g. in the case of the author, this would be:
+    CADPHYSICS_BASE=~/Geant4/geant4.10.05.p01/SEM ./run.sh
+
 This will start a simulation for alumina and a simulation for silicon as can be seen when `run.sh` is opened in a text editor.
 
 # Setting up the simulation parameters
-What exactly is simulated can be set in the files present in `Examples/Transmission`. The sample material can be set in `run.sh` as mentioned before.
+What exactly is simulated can be set in the files present in `Examples/Transmission`(these files also exist in the top directory of SEM). The sample material can be set in `run.sh` as mentioned before.
 In `YieldCurve.mac` the following can be set:
 
 The amount of primary particles per energy. In the example this is set to 500 in order to have a quick run:

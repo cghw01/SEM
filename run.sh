@@ -1,6 +1,5 @@
 #!/bin/sh
 job=results
-export CADPHYSICS_BASE="../SEM"
 for material in Alumina Silicon
 do
 	echo Starting job for ${material}
