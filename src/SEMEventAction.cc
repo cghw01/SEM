@@ -12,7 +12,7 @@ SEMEventAction::SEMEventAction()
   messenger = new SEMEventActionMessenger(this);
 
   // Initialize random number generator using system clock
-  SetSeed((G4int) time(NULL));
+  //SetSeed((G4int) time(NULL));
   G4cout << "Random number generator seeded with " << GetSeed() << G4endl;
 }
 

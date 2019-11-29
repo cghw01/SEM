@@ -43,7 +43,7 @@ CADPhysicsDIMessenger::CADPhysicsDIMessenger(CADPhysicsDI * mpga)
 	verboseCmd->SetGuidance("4 and higher - additionally with (debugging) output during simulations");
 	verboseCmd->SetParameterName("level",true);
 	verboseCmd->SetRange("level>=0");
-	verboseCmd->SetDefaultValue(1);
+	verboseCmd->SetDefaultValue(4);
 
 	energycutCmd = new G4UIcmdWithADoubleAndUnit("/process/di/energycut",this);
 	energycutCmd->SetGuidance("Lowest allowable energy (rel. to vacuum) for an electron in a liquid/solid.");

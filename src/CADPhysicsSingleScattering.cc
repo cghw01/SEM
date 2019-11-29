@@ -257,7 +257,7 @@ void CADPhysicsSingleScattering::BuildPhysicsTable(
          // In the case of gases, it does not make sense to implement an 'acoustic phonon' type of scattering.
          // Instead, we just extrapolate the Mott scattering cross sections to zero energy.
          fermienergy = 0.;
-         if(verboseLevel>1 ) G4cout << "CADPhysicsSingleScattering: " << material->GetName() << " is treated as a gas, " <<
+            G4cout << "CADPhysicsSingleScattering: " << material->GetName() << " is treated as a gas, " <<
             "with Mott cross sections starting from zero energy." << G4endl;
       } else if(verboseLevel>1) {
          if (issemi)

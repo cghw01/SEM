@@ -232,9 +232,9 @@ void CADPhysicsDI::BuildPhysicsTable(const G4ParticleDefinition& /*aParticleType
          if (deltaphi) G4cout << "Delta phi     = " << deltaphi << G4endl;
       }
 
-	if (fermieff == 0.) {
-	   fermieff = 0.01;
-	}
+//	if (fermieff == 0.) {
+//	   fermieff = 0.01;
+//	}
       G4double minlimit = enrange[FindIntLogen(fermieff)+1];
 
       if (cond==2) {// Insulator
@@ -287,6 +287,7 @@ void CADPhysicsDI::BuildPhysicsTable(const G4ParticleDefinition& /*aParticleType
          std::ofstream imfpfile;
          imfpfile.open (name.c_str());
          imfpfile << setprecision(6);
+         size_t ti = 0;
          for(size_t ii=0; ii<enrange.size(); ii++) {
             if (ii==0) {
                imfpfile << setw(12) << "Energy" << "\t" << setw(12) << "InelasticMFP" << G4endl;
@@ -309,12 +310,13 @@ void CADPhysicsDI::BuildEnrange()
    // Fill the vector enrange with TotBin+1 logarithmically spaced energy values from
    // LowestKineticEnergy to HighestKineticEnergy but double the number of entries between 1 and
    // 100 eV, since this is where most of the interesting stuff happens!
-   if(verboseLevel) G4cout << "CADPhysicsDI: Start BuildEnrange\n";
+   if(verboseLevel) G4cout << "CADPhysicsDI: Start BuildEnrange LowestKineticEnergy(eV) = " << LowestKineticEnergy/eV << "HighestKineticEnergy(eV) = " << HighestKineticEnergy/eV << " " << eV << "\n";
    enrange.clear();
    G4double logstep=pow(10.,(log(HighestKineticEnergy/LowestKineticEnergy)/log(10.)+2)/(TotBin-1));
    G4double log2step = pow(logstep,0.5);
    G4int i;
    G4double energy = LowestKineticEnergy;
+   if(verboseLevel) G4cout << "num Energy \n";
    for (i=0;i<TotBin;i++) {
       enrange.push_back(energy);
       if(0.999*eV<energy && 100.*eV>energy) {energy*=log2step;} else {energy*=logstep;}
@@ -473,6 +475,7 @@ void CADPhysicsDI::ReadEpsilonFile(const G4String& materialName,
       }
    }
 
+   //G4cout << "is a gas = " << isgas << "\n";
    if (fillzeros) {
       // We found no data file, so just fill the corresponding data structures with zeros as
       // place holders.
@@ -511,17 +514,19 @@ void CADPhysicsDI::ReadEpsilonFile(const G4String& materialName,
          // 2nd column is the corresponding value
          // The file terminates with the pattern: -1   -1
 
+         G4double e, value;
          if (a == -1) {
          } else {
             if (k%nColumns != 0) {
-               G4double e = a * eV;
+               e = a * eV;
                readepsenergies.push_back(e);
                k++;
             } else if (k%nColumns == 0) {
-               G4double value = a;
+               value = a;
                readepsdata.push_back(value);
                k = 1;
             }//if (k%nColumns !=0)
+            //if (verboseLevel>1) G4cout << "k = " << k << " e = " << e << " value = " << value << "\n";
          }//if (a == -1)
       } while (a != -1); // End of file
       file.close();
@@ -628,6 +633,7 @@ void CADPhysicsDI::CalculateCDCS (CADPhysicsDataTable* difflambdaformat,
 #endif
       G4double reduceden = enrange[i] - fermiEnergy;
       G4double omegaprime = enrange[0];
+//      if (verboseLevel > 2) G4cout << "preconst = " << preconst << " reduceden = " << reduceden << " omegaprime = " << omegaprime << " i = " << i << " enrange[i] = " << enrange[i] << " fermiEnergy = " << fermiEnergy << "\n";
       if (omegaprime>reduceden) difflambda->push_back(0.); //AT: this is for the cases where E-Ef<0.
       while(omegaprime<reduceden){// Loop over omega prime values
          G4double dcs = 0.;
@@ -638,13 +644,16 @@ void CADPhysicsDI::CalculateCDCS (CADPhysicsDataTable* difflambdaformat,
          // Calculation of the actual differential cross section wrt omega prime
          // This is the integrand in eq. 19 of Ashley
          // We make a distinction between omegaprime smaller or larger than 50 eV, see TabulateL
-         if(omegaprime>50.*eV) dcs = (*imeps)[j] * LPrim[k];
+//            if (verboseLevel > 2) G4cout << "omegaprime = " << omegaprime/eV << " reduceden = " << reduceden << " imeps = " << (*imeps)[j] << " L = " << L[k] << " LPrim = " << LPrim[k] << " dcs = " << dcs << "\n";
+         if(omegaprime>50.*eV) { dcs = (*imeps)[j] * LPrim[k];
+//           if (verboseLevel > 2) G4cout << "omegaprime = " << omegaprime/eV << " imeps = " << (*imeps)[j] << " LPrim = " << LPrim[k] << " dcs = " << dcs << "\n";
+         }
          else if(omegaprime<0.5*enrange[i]) {
             G4double factor = log(reduceden - omegaprime) - log(reduceden + omegaprime);
             dcs = (*imeps)[j] * (factor + L[k])*3./2.;
          }
          if (dcs<0.) dcs = 0.;// For safety
-
+//         if (verboseLevel>2) G4cout << " i = " << i << " j = " << j << " dcs = " << dcs << "\n";
          if(j>0) {
             // Calculation of the cumulative diff. cross section
             difflambdavalue += preconst * dcs * (enrange[j+1]-enrange[j-1])/2.;
@@ -673,10 +682,10 @@ void CADPhysicsDI::CalculateCDCS (CADPhysicsDataTable* difflambdaformat,
          }
          if (difflambdavalue != 0.0) {
             G4cout << scientific << setw(12) << enrange[i]/eV << " " << setw(12)
-                   << (1.0/difflambdavalue)/nanometer << G4endl;
+                   << (1.0/difflambdavalue)/nanometer << " eV = " << eV << G4endl;
          }
-         //G4cout << enrange[i]/eV << "\t"  << difflambdavalue << "\t"
-         //       << innershelldifflambdavalue << G4endl;
+//         G4cout << "enrange[i]/eV= " << enrange[i]/eV << "\t"  << " difflambvalue = " << difflambdavalue << "\t"
+//                << " innershielddifflambvalue = " << innershelldifflambdavalue << " eV = " << eV << G4endl;
       }
       if (i>=(TotBin-1)/5 && i<(TotBin-1)*3/5) ii++; else ii+=2;
    }
