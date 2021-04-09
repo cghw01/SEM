@@ -10,6 +10,7 @@
 #include "G4DynamicParticle.hh"
 #include "G4Material.hh"
 #include "G4TransportationManager.hh"
+#include "CADPhysicseBoundaryMessenger.hh"
 
 
 CADPhysicseBoundary::CADPhysicseBoundary(const G4String& processName,
@@ -21,6 +22,9 @@ CADPhysicseBoundary::CADPhysicseBoundary(const G4String& processName,
    }
    theStatus = Undefined;
    lasttrackID = -1;
+   messenger = new CADPhysicseBoundaryMessenger(this);
+   quantumReflect = true;
+   surfaceReflect = true;
 }
 
 CADPhysicseBoundary::~CADPhysicseBoundary(){}
@@ -282,12 +286,27 @@ void CADPhysicseBoundary::DielectricDielectric()
       NewMomentum = OldMomentum - (2.*PdotN)*theFacetNormal;
       NewEnergy = OldEnergy;
    } else {
+	// This bit assumes classical reflection, but the default is quantum reflection
+      G4double T = 1.;
+      G4double randT=0.;
       // Do quantum mechanical calculation of transmission probability
       // Note: both a positive and a negative potential step deltaU may lead to reflection!
-      G4double x = -1. * deltaU / normalEnergy;
-      G4double y = sqrt(1-x);
-      G4double T = 4.*y/((1.+y)*(1.+y));
-      G4double randT = G4UniformRand();
+      if (quantumReflect)
+      {
+          G4double x = -1. * deltaU / normalEnergy;
+          G4double y = sqrt(1-x);
+          T = 4.*y/((1.+y)*(1.+y));
+          randT = G4UniformRand();
+      }
+
+      // If the electron is arriving from the vacuum and the 
+      // surface reflection is switched off, then don´t carry out a
+      // reflection.
+      if ( U1 == 0. && !surfaceReflect )
+      {
+          randT = 0.;
+      }
+
       if(randT<T)
       {
          // Simulate transmission/refraction

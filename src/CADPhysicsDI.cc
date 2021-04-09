@@ -296,6 +296,8 @@ void CADPhysicsDI::BuildPhysicsTable(const G4ParticleDefinition& /*aParticleType
             if ((*lambda)[ii] != 0.0) {
                imfpfile << scientific << setw(12) << enrange[ii]/eV << "\t" << setw(12)
                       << (1.0/(*lambda)[ii])/nanometer << G4endl;
+//               cout << mname << " " << scientific << setw(12) << enrange[ii]/eV << "\t" << setw(12)
+//                      << (1.0/(*lambda)[ii])/nanometer << G4endl;
             }
          }
          imfpfile.close();

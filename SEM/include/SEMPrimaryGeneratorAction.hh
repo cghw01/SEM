@@ -34,6 +34,7 @@ class SEMPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     inline void SetGun(G4bool g) { G4cerr << "Value of gpsgun is now " << gpsgun << G4endl; gpsgun=g; G4cerr << "Setting gpsgun to " << gpsgun << G4endl;}
     inline G4bool GetGun() { return gpsgun;}
     void ReadHitsFile(G4String filename);
+    void ReadCOMSOLFile(G4String filename);
 
     inline G4GeneralParticleSource* GetGpsGun() { return particleGun;}
     inline G4ParticleGun* GetHitsGun() { return particleGun2;}

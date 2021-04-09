@@ -13,11 +13,12 @@
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 //#include "G4UItcsh.hh"
+//#include "G4UIterminal.hh"
 
-#ifdef G4VIS_USE
+//#ifdef G4VIS_USE
 // This visualisation executive takes care of transparency in the model. Also it allows visualization on nm scale
 #include "SEMVisExecutive.hh"
-#endif
+//#endif
 
 int main(int argc,char** argv) {
 
@@ -42,11 +43,11 @@ int main(int argc,char** argv) {
   //Initialize G4 kernel
   runManager->Initialize();
       
-#ifdef G4VIS_USE
+//#ifdef G4VIS_USE
   // Visualization, if you choose to have it!
   G4VisManager* visManager = new SEMVisExecutive;
   visManager->Initialize();
-#endif
+//#endif
    
   // UserAction classes
   runManager->SetUserAction(new SEMPrimaryGeneratorAction);
@@ -70,26 +71,28 @@ int main(int argc,char** argv) {
      // G4UIterminal is a (dumb) terminal.
      G4UIsession * session = 0;
 #ifdef G4UI_USE_TCSH
-//     G4cout << "Using G4UItcsh" << G4endl;
+     G4cout << "Using G4UItcsh" << G4endl;
 //     session = new G4UIterminal(new G4UItcsh);      
 #else
      G4cout << "Using G4UIterminal" << G4endl;
      session = new G4UIterminal();
 #endif    
 
-     UI->ApplyCommand("/control/execute SEM.mac");    
+     UI->ApplyCommand("/control/execute YieldSilicon.mac");    
+     UI->ApplyCommand("/control/execute init_vis.mac");  
      session->SessionStart();
      delete session;
   } else { 
      // Batch mode
+     G4cout << "Using Batch mode" << G4endl;
      G4String command = "/control/execute ";
      G4String fileName = argv[2];
      UI->ApplyCommand(command+fileName);
   }
 
-#ifdef G4VIS_USE
+//#ifdef G4VIS_USE
   delete visManager;
-#endif
+//#endif
   delete runManager;
 
   return 0;

@@ -50,6 +50,7 @@ private: //commands
   G4UIcommand         *ionCmd;
   G4UIcmdWithABool    *gpsgunCmd;
   G4UIcmdWithAString  *hitsfileCmd;
+  G4UIcmdWithAString  *comsolfileCmd;
 
 private: // for ion shooting
   G4bool   fShootIon; 

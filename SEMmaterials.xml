@@ -212,10 +212,20 @@ and instead of your materials definitions include the following:
    <D value="4.507" />
    <atom value="47.867" />
   </material>
-  <material Z="74" formula="W" name="Tungsten" workfunction="4.55" fermienergy="6.89" 
+	  <!--<material Z="74" formula="W" name="Tungsten" workfunction="4.55" fermienergy="6.89" --> 
+  <material Z="74" formula="W" name="Tungsten" workfunction="5.25" fermienergy="6.89" 
     resistivity="5.6e-8">
    <D value="19.25" />
    <atom value="183.83" />
+  </material>
+  <element Z="55" formula="Cs" name="Caesium" >
+   <D value="1.93" />
+   <atom value="132.90545" />
+  </element>
+  <material Z="55" formula="Cs" name="Caesium" workfunction="2.00" fermienergy="1.59" 
+    resistivity="20.5e-8">
+   <D value="1.93" />
+   <atom value="132.90545" />
   </material>
  <!-- Compounds -->
   <material formula=" " name="Backgroundgas" state="gas">

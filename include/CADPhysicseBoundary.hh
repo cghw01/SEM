@@ -13,6 +13,7 @@
 #include "CADPhysicsUnits.hh"
 
 class G4Material;
+class CADPhysicseBoundaryMessenger;
 
 enum CADPhysicseBoundaryStatus {
 	Undefined,
@@ -54,7 +55,14 @@ public:
 	CADPhysicseBoundaryStatus GetStatus() const;
 	// Returns the current status.
 
+        inline void SetQuantumReflect(G4bool g) {quantumReflect = g;}
+        inline G4bool GetQuantumReflect() {return quantumReflect;}
+        inline void SetSurfaceReflect(G4bool g) {surfaceReflect = g;}
+        inline G4bool GetSurfaceReflect() {return surfaceReflect;}
+
 private:
+
+	CADPhysicseBoundaryMessenger* messenger;
 
 	void DielectricDielectric();
 	// Private method that performs the actual check for reflection/transmission
@@ -93,6 +101,8 @@ private:
 
 	CADPhysicseBoundaryStatus theStatus;
 
+	G4bool quantumReflect;
+	G4bool surfaceReflect;
 };
 
 inline G4bool CADPhysicseBoundary::IsApplicable(const G4ParticleDefinition& 
@@ -115,5 +125,6 @@ inline CADPhysicseBoundaryStatus CADPhysicseBoundary::GetStatus() const
 {
 	return theStatus;
 }
+
 
 #endif

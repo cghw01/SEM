@@ -70,6 +70,11 @@ SEMPrimaryGeneratorActionMessenger::SEMPrimaryGeneratorActionMessenger(SEMPrimar
   gpsgunCmd->SetParameterName("gpsgun",true);
   gpsgunCmd->SetDefaultValue(true);
 
+  comsolfileCmd = new G4UIcmdWithAString("/gps/comsolfile",this);
+  comsolfileCmd->SetGuidance("Determines which file the primary particles are read from (if gpsgun is set to false)");
+  comsolfileCmd->SetGuidance("Enter a filename as parameter");
+  comsolfileCmd->SetParameterName("filename",false);
+
   hitsfileCmd = new G4UIcmdWithAString("/gps/hitsfile",this);
   hitsfileCmd->SetGuidance("Determines which file the primary particles are read from (if gpsgun is set to false)");
   hitsfileCmd->SetGuidance("Enter a filename as parameter");
@@ -82,6 +87,7 @@ SEMPrimaryGeneratorActionMessenger::~SEMPrimaryGeneratorActionMessenger()
   delete ionCmd;
   delete gpsgunCmd;
   delete hitsfileCmd;
+  delete comsolfileCmd;
 }
 
 void SEMPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand *command, G4String newValues)
@@ -89,6 +95,7 @@ void SEMPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand *command, G4Str
   if (command==ionCmd) { IonCommand(newValues); }
   if (command==gpsgunCmd) { target->SetGun(gpsgunCmd->GetNewBoolValue(newValues)); }
   if (command==hitsfileCmd) { target->ReadHitsFile(newValues); }
+  if (command==comsolfileCmd) { target->ReadCOMSOLFile(newValues); }
 }
 
 G4String SEMPrimaryGeneratorActionMessenger::GetCurrentValue(G4UIcommand *)

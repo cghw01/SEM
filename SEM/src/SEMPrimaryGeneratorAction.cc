@@ -152,3 +152,52 @@ void SEMPrimaryGeneratorAction::ReadHitsFile(G4String filename)
 }
 
 
+void SEMPrimaryGeneratorAction::ReadCOMSOLFile(G4String filename)
+{
+   G4String line;
+
+   ifstream hitsFile;
+   hitsFile.open(filename);
+   if (!hitsFile) {
+      G4Exception("Could not open COMSOL file","FileOpenError",FatalException,"SEMPrimaryGeneratorAction(1)");
+   }
+   for ( i=0; i<8; i++ ) {
+      getline(hitsFile,line); // Get the header
+   }
+   while (!hitsFile.eof()) {
+      G4int    EID,TID,PID;
+      G4double Etot, Ekin,Time,depth,rho;
+      G4ThreeVector position,vposition,direction;
+      G4String lv,process,category;
+      getline(hitsFile,line);
+      if (line !="") {
+         istringstream is(line);
+         is >> EID >> TID >> PID >> Etot >> Ekin >> Time >> position >> vposition >> direction >> depth >> rho >> lv >> process >> category;
+         //G4cerr << setw(7) << EID << " "
+         //       << setw(7) << TID << " "
+         //       << setw(7) << PID << " "
+         //       << scientific << setprecision(6)
+         //       << setw(15) << Etot/eV
+         //       << setw(15) << Ekin/eV
+         //       << setw(15) << Time/ns
+         //       << setw(15) << position.x()
+         //       << setw(15) << position.y()
+         //       << setw(15) << position.z()
+         //       << setw(15) << direction.x()
+         //       << setw(15) << direction.y()
+         //       << setw(15) << direction.z()
+         //       << G4endl;
+         KinEnergy.push_back(Ekin*eV);
+         Position.push_back(position*nanometer);
+         Direction.push_back(direction);
+         if (category=="<gamma>") {
+            ParticleType.push_back("gamma");
+         }else {
+            ParticleType.push_back("e-");
+         }
+
+      }
+   }
+}
+
+
